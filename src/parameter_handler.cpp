@@ -809,11 +809,126 @@ std::string ParameterHandler::get_string(std::string parameter, std::string
   return standard;
 }
 // _____________________________________________________________________________
+std::vector<int> ParameterHandler::get_vector_int(const char* parameter) {
+  std::string str(parameter);
+  return get_vector_int(str);
+}
+// _____________________________________________________________________________
+std::vector<int> ParameterHandler::get_vector_int(std::string parameter) {
+  if (isset_parameter(parameter)) {
+    // Parameter available: 
+    return string_to_vector_int(get_value(parameter));
+  } else {
+    // throw exception
+    std::cout << " Parameter " << parameter << " not defined. " << std::endl;
+    throw &bad_param;
+    return std::vector<int>();
+  }
+}
+// _____________________________________________________________________________
+std::vector<int> ParameterHandler::get_vector_int(
+    const char* parameter, std::vector<int> standard
+) {
+  std::string str(parameter);
+  return get_vector_int(str, standard);
+}
+// _____________________________________________________________________________
+std::vector<int> ParameterHandler::get_vector_int(
+    std::string parameter, std::vector<int> standard
+) {
+  if (isset_parameter(parameter)) {
+    // Parameter available:
+    return get_vector_int(parameter);
+  } else {
+    return standard;
+  }
+}
+// _____________________________________________________________________________
+std::vector<double> ParameterHandler::get_vector_double(const char* parameter) {
+  std::string str(parameter);
+  return get_vector_double(str);
+}
+// _____________________________________________________________________________
+std::vector<double> ParameterHandler::get_vector_double(std::string parameter) {
+  if (isset_parameter(parameter)) {
+    // Parameter available: 
+    return string_to_vector_double(get_value(parameter));
+  } else {
+    // throw exception
+    std::cout << " Parameter " << parameter << " not defined. " << std::endl;
+    throw &bad_param;
+    return std::vector<double>();
+  }
+}
+// _____________________________________________________________________________
+std::vector<double> ParameterHandler::get_vector_double(
+    const char* parameter, std::vector<double> standard
+) {
+  std::string str(parameter);
+  return get_vector_double(str, standard);
+}
+// _____________________________________________________________________________
+std::vector<double> ParameterHandler::get_vector_double(
+    std::string parameter, std::vector<double> standard
+) {
+  if (isset_parameter(parameter)) {
+    // Parameter available:
+    return get_vector_double(parameter);
+  } else {
+    return standard;
+  }
+}
+// _____________________________________________________________________________
+std::vector<int> ParameterHandler::string_to_vector_int(std::string str) {
+  // Dummy for return
+  std::vector<int> converted;
+  // Dummy string
+  std::string regex_target(str);
+  // Regular expression to get the elements of the parameter vector
+  std::regex param_regex("([^\\s^,]+)");
+  std::smatch param_match;
+  // Match vector elements until all of them are captured.
+  while(std::regex_search(regex_target, param_match, param_regex)) {
+    // Add the match to the return vector.
+    converted.push_back(stoi(param_match.str(1)));
+    // Remove the match from the target string.
+    regex_target = param_match.suffix();
+  }
+  if (converted.size() == 0){
+    throw "ParameterHandler::string_to_vector_int: could not find any";
+    throw " elements in given string.";
+  }
+  return converted;
+}
+// _____________________________________________________________________________
+std::vector<double> ParameterHandler::string_to_vector_double(std::string str) {
+  // Dummy for return
+  std::vector<double> converted;
+  // Dummy string
+  std::string regex_target(str);
+  // Regular expression to get the elements of the parameter vector
+  std::regex param_regex("([^\\s^,]+)");
+  std::smatch param_match;
+  // Match vector elements until all of them are captured.
+  while(std::regex_search(regex_target, param_match, param_regex)) {
+    // Add the match to the return vector.
+    converted.push_back(stod(param_match.str(1)));
+    // Remove the match from the target string.
+    regex_target = param_match.suffix();
+  }
+  if (converted.size() == 0){
+    throw "ParameterHandler::string_to_vector_double: could not find any";
+    throw " elements in given string.";
+  }
+  return converted;
+}
+// _____________________________________________________________________________
 int ParameterHandler::unsigned_to_signed_int(unsigned int input) {
   if (input < std::numeric_limits<int>::max()) {
     return static_cast<int>(input);
+  } else {
+    throw "ParameterHandler::unsigned_to_signed_int:: unsigned int too large.";
+    return -1;
   }
-  throw "ParameterHandler::unsigned_to_signed_int:: unsigned int too large.";
-  return -1;
 }
 // _____________________________________________________________________________

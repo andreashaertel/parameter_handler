@@ -583,6 +583,108 @@ class ParameterHandler {
    *  is interpreted as a std::string.
    */
   std::string get_string(std::string parameter, std::string standard);
+// _____________________________________________________________________________
+// STD::VECTOR<INT>: 
+// _____________________________________________________________________________
+  /** \brief Returns the std::vector<int> value of the requested parameter. 
+   * 
+   *  \param parameter Name of the parameter, whos value is requested. 
+   *  \return the value text of parameter interpreted as a std::vector<int>.
+   *
+   *  Searches the vector parameters for parameter. If not found, a 
+   *  BadParamException is thrown. If the parameter is defined, its value text 
+   *  is interpreted as a std::vector<int>. 
+   */
+  std::vector<int> get_vector_int(const char* parameter);
+  /** \brief Returns the std::vector<int> value of the requested parameter. 
+   * 
+   *  \param parameter Name of the parameter, whos value is requested. 
+   *  \return the value text of parameter interpreted as a std::vector<int>. 
+   *
+   *  Searches the vector parameters for parameter. If not found, a 
+   *  BadParamException is thrown. If the parameter is defined, its value text 
+   *  is interpreted as a std::vector<int>. 
+   */
+  std::vector<int> get_vector_int(std::string parameter);
+  /** \brief Returns the std::vector<int> value of the requested parameter. 
+   * 
+   *  \param parameter Name of the parameter, whos value is requested. 
+   *  \param standard Value that is returned, if parameter is not defined. 
+   *  \return the value text of parameter interpreted as a std::vector<int> or
+   *          the standard value. 
+   *
+   *  Searches the vector parameters for parameter. If not found, the standard 
+   *  value is returned. If the parameter is defined, its value text 
+   *  is interpreted as a std::vector<int>. 
+   */
+  std::vector<int> get_vector_int(
+      const char* parameter, std::vector<int> standard
+  );
+  /** \brief Returns the std::vector<int> value of the requested parameter. 
+   * 
+   *  \param parameter Name of the parameter, whos value is requested. 
+   *  \param standard Value that is returned, if parameter is not defined. 
+   *  \return the value text of parameter interpreted as a std::vector<int> or
+   *          the standard value. 
+   *
+   *  Searches the vector parameters for parameter. If not found, the standard 
+   *  value is returned. If the parameter is defined, its value text 
+   *  is interpreted as a std::vector<int>. 
+   */
+  std::vector<int> get_vector_int(
+      std::string parameter, std::vector<int> standard
+  );
+// _____________________________________________________________________________
+// STD::VECTOR<DOUBLE>: 
+// _____________________________________________________________________________
+  /** \brief Returns the std::vector<double> value of the requested parameter. 
+   * 
+   *  \param parameter Name of the parameter, whos value is requested. 
+   *  \return the value text of parameter interpreted as a std::vector<double>.
+   *
+   *  Searches the vector parameters for parameter. If not found, a 
+   *  BadParamException is thrown. If the parameter is defined, its value text 
+   *  is interpreted as a std::vector<double>. 
+   */
+  std::vector<double> get_vector_double(const char* parameter);
+  /** \brief Returns the std::vector<double> value of the requested parameter. 
+   * 
+   *  \param parameter Name of the parameter, whos value is requested. 
+   *  \return the value text of parameter interpreted as a std::vector<double>. 
+   *
+   *  Searches the vector parameters for parameter. If not found, a 
+   *  BadParamException is thrown. If the parameter is defined, its value text 
+   *  is interpreted as a std::vector<double>. 
+   */
+  std::vector<double> get_vector_double(std::string parameter);
+  /** \brief Returns the std::vector<double> value of the requested parameter. 
+   * 
+   *  \param parameter Name of the parameter, whos value is requested. 
+   *  \param standard Value that is returned, if parameter is not defined. 
+   *  \return the value text of parameter interpreted as a std::vector<double>
+   *          or the standard value. 
+   *
+   *  Searches the vector parameters for parameter. If not found, the standard 
+   *  value is returned. If the parameter is defined, its value text 
+   *  is interpreted as a std::vector<double>. 
+   */
+  std::vector<double> get_vector_double(
+      const char* parameter, std::vector<double> standard
+  );
+  /** \brief Returns the std::vector<double> value of the requested parameter. 
+   * 
+   *  \param parameter Name of the parameter, whos value is requested. 
+   *  \param standard Value that is returned, if parameter is not defined. 
+   *  \return the value text of parameter interpreted as a std::vector<double>
+   *          or the standard value. 
+   *
+   *  Searches the vector parameters for parameter. If not found, the standard 
+   *  value is returned. If the parameter is defined, its value text 
+   *  is interpreted as a std::vector<double>. 
+   */
+  std::vector<double> get_vector_double(
+      std::string parameter, std::vector<double> standard
+  );
 //##############################################################################
 // EXCEPTIONS:
 //##############################################################################
@@ -602,12 +704,7 @@ class ParameterHandler {
   /** \brief Exception BadParamException bad_param for the ParameterHandler.
    *
    *  The exception is thrown
-   *  by the get_value(std::string) function,
-   *  by the get_double(std::string) function,
-   *  by the get_int(std::string) function,
-   *  by the get_bool(std::string) function,
-   *  by the get_char(std::string) function,
-   *  by the get_string(std::string) function, and
+   *  by the get_[data type](std::string) function,
    *  by the find_option(std::string,int,int) function,
    *  if the requested parameter is not defined in the vector parameters.
    */
@@ -787,5 +884,31 @@ class ParameterHandler {
    *  an exception is thrown.
    */
   int unsigned_to_signed_int(unsigned int input);
+// _____________________________________________________________________________
+  /** \brief Converts strings of comma delimitted numbers (without spaces) into
+   *         a vector of integers.
+   * 
+   *  \param str std::string to be converted.
+   *  \return the converted input as vector<int>
+   *
+   *  This function converts strings containings sequences of numbers, which are
+   *  delimited by commas, into a vector of integers (e.g. "0,5,-3" -->
+   *  vector<int>{0, 5, -3}).
+   *
+   */
+  std::vector<int> string_to_vector_int(std::string str);
+// _____________________________________________________________________________
+  /** \brief Converts strings of comma delimitted numbers (without spaces) into
+   *         a vector of doubles.
+   * 
+   *  \param str std::string to be converted.
+   *  \return the converted input as vector<double>
+   *
+   *  This function converts strings containings sequences of numbers, which are
+   *  delimited by commas, into a vector of doubles (e.g. "0.1,5.5,-3.14" -->
+   *  vector<int>{0.1, 5.5, -3.14}).
+   *
+   */
+  std::vector<double> string_to_vector_double(std::string str);
 };
 #endif  // SRC_PARAMETER_HANDLER_HPP_
