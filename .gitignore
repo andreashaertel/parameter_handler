@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: CC0-1.0
 # SPDX-PackageName: parameter_handler
 # SPDX-PackageHomePage: https://github.com/andreashaertel/parameter_handler
+*.swp
 bin
 obj
 include
